@@ -1,12 +1,24 @@
+:root{
+  --spacing1: 16px;
+  --spacing2: 25px;
+}
+
 .App {
-  padding: 16px;
+  padding: var(--spacing1);
+  display: grid;
+  grid-gap: var(--spacing1);
+}
+
+.Space-between{
+  display: flex;
+  justify-content: space-between;
 }
 
 .Card-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(calc(320px - 32px), 1fr));
   align-items: start;
-  grid-gap: 16px;
+  grid-gap: var(--spacing1);
 }
 .Card-list img{
   width: 100%;
@@ -17,7 +29,7 @@
 }
 
 .Card-content{
-  padding: 25px;
+  padding: var(--spacing2);
 }
 
 .Bold-text{
