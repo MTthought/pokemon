@@ -1,5 +1,3 @@
-import React from 'react';
-
 const Pagination = ({ page, pager }) => (
     <div className="Space-between">
       <button onClick={() => pager(page.previous)} disabled={!page.previous}>previous</button>

@@ -1,5 +1,3 @@
-import React from 'react';
-
 const Card = ({ singlePokemon }) => (
     <div className="Card">
         <img src={singlePokemon.sprites.other["official-artwork"].front_default} alt="img"/>
