@@ -2,12 +2,14 @@
 import axios from "axios";
 import {useState, useEffect} from 'react';
 import './App.css';
-import sortBy from "./helpers";
+import {sortBy, search} from "./helpers";
 import CardList from './components/CardList';
 import Pagination from './components/Pagination';
 import Sorting from "./components/Sorting";
+import SearchBar from "./components/SearchBar";
 
 function App() {
+  const [data, setData] = useState([]);
   const [pokemon, setPokemon] = useState([]);
   // to do: store current page on local storage
   const [page, setPage] = useState({
@@ -35,34 +37,42 @@ function App() {
       });
 
       // reset pokemon list
+      setData([]);
       setPokemon([]);
 
       // update pokemon list
+      // to do: https://stackoverflow.com/questions/38406920/best-way-to-wait-for-foreach-to-complete
       response.data.results.forEach(singlePokemon => {
         axios.get(singlePokemon.url).then((response) => {
-          setPokemon(pokemon => [...pokemon, response.data] );
+          setData(data => [...data, response.data] );
+          setPokemon(pokemon => [...pokemon, response.data]);
         })
       })
     });
-    // reset sorting on new page
-    setSettings({...settings, sortBy: 'unsorted'});
+    // reset settings on new page
+    setSettings({
+      sortBy: 'unsorted',
+      search: '',
+    });
   };
 
-  const handleChange = value => {
+  const handleSort = value => {
     setSettings({...settings, sortBy: value});
-    if(value === 'unsorted'){
-      pager(page.current);
-    }else{
-      setPokemon(sortBy(value, pokemon));
-    };
+    setPokemon(value === 'unsorted' ? search(settings.search, data) : sortBy(value, pokemon));
   };
+
+  const handleSearch = value => {
+    setSettings({...settings, search: value});
+    setPokemon(settings.sortBy === 'unsorted' ? search(value, data) : search(value, pokemon));
+  }
 
   return (
     <div className="App">
-      <Pagination page={page} pager={pager}/>
-      <Sorting handleChange={handleChange} sortBy={settings.sortBy}/>
-      <CardList pokemon={pokemon}/>
-      <Pagination page={page} pager={pager}/>
+      <Pagination page={page} pager={pager} />
+      <Sorting handleChange={handleSort} value={settings.sortBy} />
+      <SearchBar handleChange={handleSearch} value={settings.search} />
+      <CardList pokemon={pokemon} />
+      <Pagination page={page} pager={pager} />
     </div>
   );
 }
