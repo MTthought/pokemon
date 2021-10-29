@@ -32,11 +32,11 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 - User should be shown previous and next links - on both the top and the bottom of the page
 - User should be able to search through the Pokémon list using the name and abilities
 - User should be able to sort the result by name, height and weight
+- Page refresh should maintain the sorting and search related data
 - Make UI responsive to cater to standard mobile, tablet and desktop viewports
 
 ### To do
 - User should have option to choose the number of cards available per page available options are 10, 20 and 50
-- Page refresh should maintain the sorting and search related data
 - User should be taken to the details page and present all the information available for
 that Pokémon. The user should have a link to go back to the previous page
 - Write relevant unit test cases for the UI

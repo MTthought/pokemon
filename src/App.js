@@ -1,6 +1,6 @@
 // import logo from './logo.svg';
-import axios from "axios";
 import {useState, useEffect} from 'react';
+import api from "./api";
 import './App.css';
 import {sortBy, search} from "./helpers";
 import CardList from './components/CardList';
@@ -9,68 +9,70 @@ import Sorting from "./components/Sorting";
 import SearchBar from "./components/SearchBar";
 
 function App() {
+  // pokemon list as served from API
   const [data, setData] = useState([]);
+
+  // formated pokemon list based on sort and search
   const [pokemon, setPokemon] = useState([]);
-  // to do: store current page on local storage
+
   const [page, setPage] = useState({
-    current: null,
+    current: localStorage.getItem('currentPage'),
     next: null,
     previous: null
   });
+
   const [settings, setSettings] = useState({
-    sortBy: 'unsorted',
-    search: '',
+    sortBy: (localStorage.getItem('sortBy') ? localStorage.getItem('sortBy') : 'unsorted'),
+    search: (localStorage.getItem('search') ? localStorage.getItem('search') : ''),
   });
 
   useEffect(() => {
-    pager('https://pokeapi.co/api/v2/pokemon?limit=20&offset=0');
+    pager(page.current ? page.current : 'https://pokeapi.co/api/v2/pokemon?limit=20&offset=0');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  
+
   const pager = url => {
-    axios.get(url).then(response => {
+    api(url).then(apiData => {
       // update page state
       setPage({
         current: url,
-        next: response.data.next,
-        previous: response.data.previous
+        next: apiData.page.next,
+        previous: apiData.page.previous
       });
 
-      // reset pokemon list
+      // update local storage
+      localStorage.setItem('currentPage', url);
+
+      // reset pokemon lists
       setData([]);
       setPokemon([]);
 
-      // update pokemon list
-      // to do: https://stackoverflow.com/questions/38406920/best-way-to-wait-for-foreach-to-complete
-      response.data.results.forEach(singlePokemon => {
-        axios.get(singlePokemon.url).then((response) => {
-          setData(data => [...data, response.data] );
-          setPokemon(pokemon => [...pokemon, response.data]);
-        })
-      })
+      // update pokemon lists
+      setData(apiData.pokemonList);
+      let tempPokemon = search(settings.search, apiData.pokemonList);
+      setPokemon(sortBy(settings.sortBy, tempPokemon));
     });
-    // reset settings on new page
+  };
+
+  const handleChange = (searchVal, sortVal) => {
     setSettings({
-      sortBy: 'unsorted',
-      search: '',
+      search: searchVal, 
+      sortBy: sortVal
     });
+    localStorage.setItem('sortBy', sortVal);
+    localStorage.setItem('search', searchVal);
+
+    let tempPokemon = search(searchVal, data);
+    setPokemon(sortBy(sortVal, tempPokemon));
   };
 
-  const handleSort = value => {
-    setSettings({...settings, sortBy: value});
-    setPokemon(value === 'unsorted' ? search(settings.search, data) : sortBy(value, pokemon));
-  };
-
-  const handleSearch = value => {
-    setSettings({...settings, search: value});
-    setPokemon(settings.sortBy === 'unsorted' ? search(value, data) : search(value, pokemon));
-  }
+  if (!pokemon) return null;
 
   return (
     <div className="App">
       <Pagination page={page} pager={pager} />
-      <Sorting handleChange={handleSort} value={settings.sortBy} />
-      <SearchBar handleChange={handleSearch} value={settings.search} />
+      <Sorting handleChange={handleChange} settings={settings} />
+      <SearchBar handleChange={handleChange} settings={settings} />
       <CardList pokemon={pokemon} />
       <Pagination page={page} pager={pager} />
     </div>

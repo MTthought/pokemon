@@ -1,7 +1,7 @@
-const SearchBar = ({ handleChange, value }) => (
+const SearchBar = ({ handleChange, settings }) => (
     <div>
         <label htmlFor="search">Search:</label>
-        <input id="search" type="text" value={value} placeholder="Name or abilities" onChange={event => handleChange(event.target.value.trim())}/>
+        <input id="search" type="text" value={settings.search} placeholder="Name or abilities" onChange={event => handleChange(event.target.value.trim(), settings.sortBy)}/>
     </div>
 );
     
