@@ -8,7 +8,9 @@ import Pagination from './components/Pagination';
 import Sorting from "./components/Sorting";
 import SearchBar from "./components/SearchBar";
 
-function App() {
+const baseUrl = 'https://pokeapi.co/api/v2/pokemon';
+
+function App() {  
   // pokemon list as served from API
   const [data, setData] = useState([]);
 
@@ -27,7 +29,7 @@ function App() {
   });
 
   useEffect(() => {
-    pager(page.current ? page.current : 'https://pokeapi.co/api/v2/pokemon?limit=20&offset=0');
+    pager(page.current ? page.current : baseUrl);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -66,15 +68,24 @@ function App() {
     setPokemon(sortBy(sortVal, tempPokemon));
   };
 
-  if (!pokemon) return null;
-
   return (
     <div className="App">
-      <Pagination page={page} pager={pager} />
-      <Sorting handleChange={handleChange} settings={settings} />
-      <SearchBar handleChange={handleChange} settings={settings} />
-      <CardList pokemon={pokemon} />
-      <Pagination page={page} pager={pager} />
+      <header className="Header">
+        <img src="/pokeapi_logo.png" alt="PokéAPI" className="Logo" onClick={() => {
+          localStorage.removeItem('currentPage');
+          localStorage.removeItem('search');
+          localStorage.removeItem('sortBy');
+          window.location.reload();
+        }}/>
+          <Sorting handleChange={handleChange} settings={settings} />
+          <SearchBar handleChange={handleChange} settings={settings} />
+      </header>
+      
+      <div className="Container">
+        <Pagination page={page} pager={pager} />
+        <CardList pokemon={pokemon} />
+        <Pagination page={page} pager={pager} />
+      </div>
     </div>
   );
 }

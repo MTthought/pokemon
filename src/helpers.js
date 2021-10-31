@@ -10,7 +10,7 @@ const sortBy = (key, array) => (
 
 const search = (target, array) => (
     array.filter(element => {
-        if(element.name.includes(target) || element.abilities.some(element => element.ability.name.includes(target))){
+        if(element.name.includes(target.toLowerCase()) || element.abilities.some(element => element.ability.name.includes(target.toLowerCase()))){
             return true;
         }else{
             return false;

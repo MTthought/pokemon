@@ -1,7 +1,11 @@
 const Sorting = ({ handleChange, settings }) => (
 <div>
-    <label htmlFor="nameSorting">Sort by:</label>
-    <select id="nameSorting" value={settings.sortBy} onChange={event => handleChange(settings.search, event.target.value)}>
+    <label htmlFor="nameSorting">Sort by</label>
+    <select 
+      id="nameSorting" 
+      value={settings.sortBy} 
+      onChange={event => handleChange(settings.search, event.target.value)}
+    >
       <option value="unsorted">--</option>
       <option value="name">Name</option>
       <option value="height">Height</option>
