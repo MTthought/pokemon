@@ -34,6 +34,10 @@ function App() {
   }, []);
 
   const pager = url => {
+    // reset pokemon lists
+    setData([]);
+    setPokemon([]);
+    
     api(url).then(apiData => {
       // update page state
       setPage({
@@ -44,10 +48,6 @@ function App() {
 
       // update local storage
       localStorage.setItem('currentPage', url);
-
-      // reset pokemon lists
-      setData([]);
-      setPokemon([]);
 
       // update pokemon lists
       setData(apiData.pokemonList);
