@@ -1,4 +1,5 @@
 import processData from "../../helpers";
+import * as types from "../actions/actionTypes";
 
 const initialState = {
   page: {
@@ -20,7 +21,7 @@ const initialState = {
 
 export default function listReducer(state = initialState, action) {
   switch (action.type) {
-    case "SET_LISTS":
+    case types.SET_LISTS:
       return {
         ...state,
         rawList: action.pokemon, // pokemon list as served from API
@@ -30,7 +31,7 @@ export default function listReducer(state = initialState, action) {
           state.settings.sortBy
         ), // sorted and filtered pokemon list
       };
-    case "UPDATE_PROCESSED_LIST":
+    case types.CHANGE_LIST:
       return {
         ...state,
         processedList: processData(
@@ -39,9 +40,9 @@ export default function listReducer(state = initialState, action) {
           state.settings.sortBy
         ),
       };
-    case "SET_SETTINGS":
+    case types.SET_SETTINGS:
       return { ...state, settings: action.settings };
-    case "SET_PAGE":
+    case types.SET_PAGE:
       return { ...state, page: action.page };
     default:
       return state;

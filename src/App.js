@@ -7,10 +7,11 @@ import Sorting from "./components/Sorting";
 import SearchBar from "./components/SearchBar";
 import { connect } from "react-redux";
 import * as listActions from "../src/redux/actions/listActions";
+import { bindActionCreators } from "redux";
 
 const baseUrl = "https://pokeapi.co/api/v2/pokemon";
 
-function App({ dispatch, list }) {
+function App({ actions, list }) {
   const { page, settings, processedList } = list;
 
   useEffect(() => {
@@ -20,36 +21,32 @@ function App({ dispatch, list }) {
 
   const pager = (url) => {
     // reset raw and processed lists
-    dispatch(listActions.setLists([]));
+    actions.setLists([]);
     api(url).then((apiData) => {
       // update page state
-      dispatch(
-        listActions.setPage({
-          current: url,
-          next: apiData.page.next,
-          previous: apiData.page.previous,
-        })
-      );
+      actions.setPage({
+        current: url,
+        next: apiData.page.next,
+        previous: apiData.page.previous,
+      });
       // update local storage
       localStorage.setItem("currentPage", url);
       // update raw and processed lists
-      dispatch(listActions.setLists(apiData.pokemonList));
+      actions.setLists(apiData.pokemonList);
     });
   };
 
   const handleChange = (searchVal, sortVal) => {
     // update settings
-    dispatch(
-      listActions.setSettings({
-        search: searchVal,
-        sortBy: sortVal,
-      })
-    );
+    actions.setSettings({
+      search: searchVal,
+      sortBy: sortVal,
+    });
     // update local storage
     localStorage.setItem("sortBy", sortVal);
     localStorage.setItem("search", searchVal);
     // update processed list
-    dispatch(listActions.updateProcessedList());
+    actions.changeList();
   };
 
   return (
@@ -85,4 +82,10 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(App);
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(listActions, dispatch),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
