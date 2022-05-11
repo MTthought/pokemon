@@ -8,7 +8,15 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<ListPage />} />
-        <Route path="details" element={<DetailsPage />} />
+        <Route path=":name" element={<DetailsPage />} />
+        <Route
+          path="*"
+          element={
+            <main style={{ padding: "1rem" }}>
+              <p>There's nothing here!</p>
+            </main>
+          }
+        />
       </Routes>
     </div>
   );

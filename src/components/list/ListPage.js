@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import api from "../../api";
 import CardList from "./CardList";
@@ -63,7 +62,6 @@ function ListPage({ actions, list }) {
             window.location.reload();
           }}
         />
-        <Link to="details">details</Link>
         <Sorting handleChange={handleChange} settings={settings} />
         <SearchBar handleChange={handleChange} settings={settings} />
       </header>
