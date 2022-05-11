@@ -17,6 +17,7 @@ const initialState = {
   },
   rawList: [],
   processedList: [],
+  status: "No search match",
 };
 
 export default function listReducer(state = initialState, action) {
@@ -30,6 +31,7 @@ export default function listReducer(state = initialState, action) {
           state.settings.search,
           state.settings.sortBy
         ), // sorted and filtered pokemon list
+        status: action.pokemon.length ? initialState.status : "Loading...",
       };
     case types.CHANGE_LIST:
       return {

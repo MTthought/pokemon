@@ -1,9 +1,8 @@
 import Card from "./Card";
 
-const CardList = ({ pokemon }) =>
-  // to do: if no search match, show something different from 'loading'
+const CardList = ({ pokemon, status }) =>
   !pokemon.length ? (
-    <p>Loading...</p>
+    <p>{status}</p>
   ) : (
     <div className="Card-list">
       {pokemon.map((singlePokemon) => (

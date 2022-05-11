@@ -12,7 +12,7 @@ import { bindActionCreators } from "redux";
 const baseUrl = "https://pokeapi.co/api/v2/pokemon";
 
 function ListPage({ actions, list }) {
-  const { page, settings, processedList } = list;
+  const { page, settings, processedList, status } = list;
 
   useEffect(() => {
     pager(page.current ? page.current : baseUrl);
@@ -70,7 +70,7 @@ function ListPage({ actions, list }) {
 
       <div className="Container">
         <Pagination page={page} pager={pager} />
-        <CardList pokemon={processedList} />
+        <CardList pokemon={processedList} status={status} />
         <Pagination page={page} pager={pager} />
       </div>
     </>
