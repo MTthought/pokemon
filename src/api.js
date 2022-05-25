@@ -1,18 +1,22 @@
-import axios from 'axios';
+import axios from "axios";
 
-async function getPokemon (urls) {
-    const tempPokemon = urls.map(async singlePokemon => {
-        const response = await axios.get(singlePokemon.url);
-        return response.data;
-    });
-    const pokemon = await Promise.all(tempPokemon);
-    return pokemon;
+export async function getSinglePokemon(url) {
+  const response = await axios.get(url);
+  return response.data;
 }
 
-export default async function api(url) {
+async function getPokemonList(urls) {
+  const tempPokemon = urls.map((singlePokemon) =>
+    getSinglePokemon(singlePokemon.url)
+  );
+  const pokemon = await Promise.all(tempPokemon);
+  return pokemon;
+}
+
+export async function api(url) {
   const pageResponse = await axios.get(url);
 
-  const pokemonList = await getPokemon(pageResponse.data.results);
-      
-  return {page: pageResponse.data, pokemonList};
+  const pokemonList = await getPokemonList(pageResponse.data.results);
+
+  return { page: pageResponse.data, pokemonList };
 }

@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import ListPage from "./components/list/ListPage";
 import DetailsPage from "./components/details/DetailsPage";
+import Footer from "./components/common/Footer";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           }
         />
       </Routes>
+      <Footer />
     </div>
   );
 }

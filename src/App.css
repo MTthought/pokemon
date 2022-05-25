@@ -41,6 +41,11 @@ label {
   box-shadow: var(--shadow);
 }
 
+.Footer {
+  background-color: var(--grey);
+  padding: var(--spacing2);
+}
+
 @media (min-width: 768px) {
   .Header {
     grid-template-columns: 1fr auto auto;
@@ -49,7 +54,9 @@ label {
 }
 
 .Container {
+  min-height: calc(100vh - 9.3rem);
   display: grid;
+  grid-template-rows: auto 1fr auto;
   grid-gap: var(--spacing2);
   padding: var(--spacing3) var(--spacing2);
 }

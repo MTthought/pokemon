@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import api from "../../api";
+import { api } from "../../api";
 import CardList from "./CardList";
 import Pagination from "./Pagination";
 import Sorting from "./Sorting";
@@ -7,8 +7,8 @@ import SearchBar from "./SearchBar";
 import { connect } from "react-redux";
 import * as listActions from "../../redux/actions/listActions";
 import { bindActionCreators } from "redux";
-
-const baseUrl = "https://pokeapi.co/api/v2/pokemon";
+import { baseUrl } from "../../constants";
+import Header from "../common/Header";
 
 function ListPage({ actions, list }) {
   const { page, settings, processedList, status } = list;
@@ -50,21 +50,10 @@ function ListPage({ actions, list }) {
 
   return (
     <>
-      <header className="Header">
-        <img
-          src="/pokeapi_logo.png"
-          alt="PokéAPI"
-          className="Logo"
-          onClick={() => {
-            localStorage.removeItem("currentPage");
-            localStorage.removeItem("search");
-            localStorage.removeItem("sortBy");
-            window.location.reload();
-          }}
-        />
+      <Header>
         <Sorting handleChange={handleChange} settings={settings} />
         <SearchBar handleChange={handleChange} settings={settings} />
-      </header>
+      </Header>
 
       <div className="Container">
         <Pagination page={page} pager={pager} />
