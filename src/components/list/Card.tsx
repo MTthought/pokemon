@@ -1,6 +1,16 @@
 import { Link } from "react-router-dom";
 
-const Card = ({ singlePokemon }) => (
+interface Props {
+  singlePokemon: {
+    name: string;
+    sprites: { other: { "official-artwork": { front_default: string } } };
+    height: number;
+    weight: number;
+    abilities: [{ ability: { name: string } }];
+  };
+}
+
+const Card = ({ singlePokemon }: Props) => (
   <Link to={`${singlePokemon.name}`} className="Card">
     <img
       src={singlePokemon.sprites.other["official-artwork"].front_default}

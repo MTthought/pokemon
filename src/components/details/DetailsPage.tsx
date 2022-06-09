@@ -5,13 +5,15 @@ import { baseUrl } from "../../constants";
 import Header from "../common/Header";
 
 const DetailsPage = () => {
-  const params = useParams();
-  const url = `${baseUrl}/${params.name}`;
+  const { name } = useParams<{ name: string }>();
+  const url: string = `${baseUrl}/${name}`;
+
   useEffect(() => {
     getSinglePokemon(url).then((apiData) => {
       console.log(apiData);
     });
   }, [url]);
+
   return (
     <>
       <Header />
@@ -22,7 +24,7 @@ const DetailsPage = () => {
           </Link>
         </div>
         <div>
-          <h2>Details {params.name}</h2>
+          <h2>Details {name}</h2>
           <p>
             This app uses React, Redux, React Router, and many other helpful
             libraries.

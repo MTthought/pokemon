@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
 
-const Header = ({ children }) => (
+interface Props {
+  children?: React.ReactNode;
+}
+
+const Header = ({ children }: Props) => (
   <header className="Header">
     <div
       onClick={() => {
