@@ -20,7 +20,7 @@ const initialState = {
   status: "No search match",
 };
 
-export default function listReducer(state = initialState, action) {
+export default function listReducer(state = initialState, action: any) {
   switch (action.type) {
     case types.SET_LISTS:
       return {

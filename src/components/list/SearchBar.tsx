@@ -1,5 +1,12 @@
+import { Settings, SortValue } from "../../Types";
+
+interface Props {
+  handleChange: (searchVal: string, sortVal: SortValue) => void;
+  settings: Settings;
+}
+
 // to do: fix lagging when typing onto search bar
-const SearchBar = ({ handleChange, settings }) => (
+const SearchBar = ({ handleChange, settings }: Props) => (
   <div>
     <label htmlFor="search">Search</label>
     <input
@@ -7,7 +14,7 @@ const SearchBar = ({ handleChange, settings }) => (
       type="text"
       value={settings.search}
       placeholder="Name or ability"
-      onChange={(event) =>
+      onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
         handleChange(event.target.value.trim(), settings.sortBy)
       }
     />

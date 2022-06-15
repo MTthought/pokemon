@@ -9,8 +9,19 @@ import * as listActions from "../../redux/actions/listActions";
 import { bindActionCreators } from "redux";
 import { baseUrl } from "../../constants";
 import Header from "../common/Header";
+import { Page, SortValue, Settings, SinglePokemon, Status } from "../../Types";
 
-function ListPage({ actions, list }) {
+interface Props {
+  actions: any;
+  list: {
+    page: Page;
+    settings: Settings;
+    processedList: SinglePokemon[];
+    status: Status;
+  };
+}
+
+function ListPage({ actions, list }: Props) {
   const { page, settings, processedList, status } = list;
 
   useEffect(() => {
@@ -18,10 +29,10 @@ function ListPage({ actions, list }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const pager = (url) => {
+  const pager = (url: string) => {
     // reset raw and processed lists
     actions.setLists([]);
-    api(url).then((apiData) => {
+    api(url).then((apiData: { page: any; pokemonList: SinglePokemon[] }) => {
       // update page state
       actions.setPage({
         current: url,
@@ -35,7 +46,7 @@ function ListPage({ actions, list }) {
     });
   };
 
-  const handleChange = (searchVal, sortVal) => {
+  const handleChange = (searchVal: string, sortVal: SortValue) => {
     // update settings
     actions.setSettings({
       search: searchVal,
@@ -64,13 +75,13 @@ function ListPage({ actions, list }) {
   );
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state: any) {
   return {
     list: state.list,
   };
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch: any) {
   return {
     actions: bindActionCreators(listActions, dispatch),
   };

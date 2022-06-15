@@ -1,13 +1,8 @@
 import { Link } from "react-router-dom";
+import { SinglePokemon } from "../../Types";
 
 interface Props {
-  singlePokemon: {
-    name: string;
-    sprites: { other: { "official-artwork": { front_default: string } } };
-    height: number;
-    weight: number;
-    abilities: [{ ability: { name: string } }];
-  };
+  singlePokemon: SinglePokemon;
 }
 
 const Card = ({ singlePokemon }: Props) => (
