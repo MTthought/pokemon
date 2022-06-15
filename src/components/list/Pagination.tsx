@@ -7,10 +7,16 @@ interface Props {
 
 const Pagination = ({ page, pager }: Props) => (
   <div className="Space-between">
-    <button onClick={() => pager(page.previous)} disabled={!page.previous}>
+    <button
+      onClick={() => (page.previous ? pager(page.previous) : null)}
+      disabled={!page.previous}
+    >
       previous
     </button>
-    <button onClick={() => pager(page.next)} disabled={!page.next}>
+    <button
+      onClick={() => (page.next ? pager(page.next) : null)}
+      disabled={!page.next}
+    >
       next
     </button>
   </div>

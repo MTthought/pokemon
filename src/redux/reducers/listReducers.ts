@@ -1,37 +1,54 @@
 import processData from "../../helpers";
 import * as types from "../actions/actionTypes";
+import { ListState, Action, LocalStorage } from "../../Types";
+import { baseUrl } from "../../constants";
 
-const initialState = {
+const initialState: ListState = {
   page: {
-    current: localStorage.getItem("currentPage"),
+    current: baseUrl,
     next: null,
     previous: null,
   },
   settings: {
-    sortBy: localStorage.getItem("sortBy")
-      ? localStorage.getItem("sortBy")
-      : "unsorted",
-    search: localStorage.getItem("search")
-      ? localStorage.getItem("search")
-      : "",
+    sortBy: "unsorted",
+    search: "",
   },
   rawList: [],
   processedList: [],
   status: "No search match",
 };
 
-export default function listReducer(state = initialState, action: any) {
+export default function listReducer(
+  state: ListState = initialState,
+  action: Action
+): ListState {
   switch (action.type) {
+    case types.GET_LOCAL_STORAGE:
+      const currentPage: LocalStorage = localStorage.getItem("currentPage");
+      const sortValue: LocalStorage = localStorage.getItem("sortBy");
+      const searchValue: LocalStorage = localStorage.getItem("search");
+
+      return {
+        ...state,
+        page: {
+          ...state.page,
+          current: currentPage ? currentPage : initialState.page.current,
+        },
+        settings: {
+          sortBy: sortValue ? sortValue : initialState.settings.sortBy,
+          search: searchValue ? searchValue : initialState.settings.search,
+        },
+      };
     case types.SET_LISTS:
       return {
         ...state,
-        rawList: action.pokemon, // pokemon list as served from API
+        rawList: action.payload, // pokemon list as served from API
         processedList: processData(
-          action.pokemon,
+          action.payload,
           state.settings.search,
           state.settings.sortBy
         ), // sorted and filtered pokemon list
-        status: action.pokemon.length ? initialState.status : "Loading...",
+        status: action.payload.length ? initialState.status : "Loading...",
       };
     case types.CHANGE_LIST:
       return {
@@ -43,9 +60,9 @@ export default function listReducer(state = initialState, action: any) {
         ),
       };
     case types.SET_SETTINGS:
-      return { ...state, settings: action.settings };
+      return { ...state, settings: action.payload };
     case types.SET_PAGE:
-      return { ...state, page: action.page };
+      return { ...state, page: action.payload };
     default:
       return state;
   }

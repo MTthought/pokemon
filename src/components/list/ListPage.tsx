@@ -7,12 +7,17 @@ import SearchBar from "./SearchBar";
 import { connect } from "react-redux";
 import * as listActions from "../../redux/actions/listActions";
 import { bindActionCreators } from "redux";
-import { baseUrl } from "../../constants";
 import Header from "../common/Header";
 import { Page, SortValue, Settings, SinglePokemon, Status } from "../../Types";
 
 interface Props {
-  actions: any;
+  actions: {
+    setLists: (payload: SinglePokemon[]) => void;
+    setPage: (payload: Page) => void;
+    setSettings: (payload: Settings) => void;
+    changeList: () => void;
+    getLocalStorage: () => void;
+  };
   list: {
     page: Page;
     settings: Settings;
@@ -25,7 +30,8 @@ function ListPage({ actions, list }: Props) {
   const { page, settings, processedList, status } = list;
 
   useEffect(() => {
-    pager(page.current ? page.current : baseUrl);
+    actions.getLocalStorage();
+    pager(page.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
