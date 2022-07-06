@@ -1,20 +1,23 @@
 import { Link, useParams } from "react-router-dom";
-import { getSinglePokemon } from "../../api";
 import { useEffect } from "react";
-import { baseUrl } from "../../constants";
 import Header from "../common/Header";
+import { ReduxProps } from "../../Types";
 
-const DetailsPage = () => {
+const DetailsPage = ({ actions, list }: ReduxProps) => {
   const { name } = useParams<{ name: string }>();
-  const url: string = `${baseUrl}/${name}`;
 
   useEffect(() => {
-    getSinglePokemon(url).then((apiData) => {
-      console.log(apiData);
-    });
-  }, [url]);
+    actions.setDetails(
+      list.processedList.filter(
+        (singlePokemon) => singlePokemon.name === name
+      )[0]
+    );
+  }, []);
 
-  return (
+  const { details, status } = list;
+  console.log(details); // to do: reloading erases data
+
+  return details ? (
     <>
       <Header />
       <div className="Container">
@@ -32,6 +35,8 @@ const DetailsPage = () => {
         </div>
       </div>
     </>
+  ) : (
+    <p>{status}</p>
   );
 };
 

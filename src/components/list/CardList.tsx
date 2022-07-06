@@ -7,14 +7,14 @@ interface Props {
 }
 
 const CardList = ({ pokemon, status }: Props) =>
-  !pokemon.length ? (
-    <p>{status}</p>
-  ) : (
+  pokemon.length ? (
     <div className="Card-list">
       {pokemon.map((singlePokemon: SinglePokemon) => (
         <Card key={singlePokemon.id} singlePokemon={singlePokemon} />
       ))}
     </div>
+  ) : (
+    <p>{status}</p>
   );
 
 export default CardList;

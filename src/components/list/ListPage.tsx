@@ -4,29 +4,10 @@ import CardList from "./CardList";
 import Pagination from "./Pagination";
 import Sorting from "./Sorting";
 import SearchBar from "./SearchBar";
-import { connect } from "react-redux";
-import * as listActions from "../../redux/actions/listActions";
-import { bindActionCreators } from "redux";
 import Header from "../common/Header";
-import { Page, SortValue, Settings, SinglePokemon, Status } from "../../Types";
+import { SinglePokemon, SortValue, ReduxProps } from "../../Types";
 
-interface Props {
-  actions: {
-    setLists: (payload: SinglePokemon[]) => void;
-    setPage: (payload: Page) => void;
-    setSettings: (payload: Settings) => void;
-    changeList: () => void;
-    getLocalStorage: () => void;
-  };
-  list: {
-    page: Page;
-    settings: Settings;
-    processedList: SinglePokemon[];
-    status: Status;
-  };
-}
-
-function ListPage({ actions, list }: Props) {
+function ListPage({ actions, list }: ReduxProps) {
   const { page, settings, processedList, status } = list;
 
   useEffect(() => {
@@ -46,7 +27,7 @@ function ListPage({ actions, list }: Props) {
         previous: apiData.page.previous,
       });
       // update local storage
-      localStorage.setItem("currentPage", url);
+      localStorage.setItem("currentPage", url); // to do: reloading doesn't save page
       // update raw and processed lists
       actions.setLists(apiData.pokemonList);
     });
@@ -81,16 +62,4 @@ function ListPage({ actions, list }: Props) {
   );
 }
 
-function mapStateToProps(state: any) {
-  return {
-    list: state.list,
-  };
-}
-
-function mapDispatchToProps(dispatch: any) {
-  return {
-    actions: bindActionCreators(listActions, dispatch),
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ListPage);
+export default ListPage;

@@ -20,3 +20,7 @@ export function setPage(payload: Page) {
 export function getLocalStorage() {
   return { type: types.GET_LOCAL_STORAGE };
 }
+
+export function setDetails(payload: any) {
+  return { type: types.SET_DETAILS, payload };
+}

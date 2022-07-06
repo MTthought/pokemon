@@ -30,9 +30,28 @@ export type ListState = {
   rawList: SinglePokemon[];
   processedList: SinglePokemon[];
   status: Status;
+  details?: any;
 };
 
 export type Action = {
   type: string;
   payload?: any;
 };
+
+export interface ReduxProps {
+  actions: {
+    setLists: (payload: SinglePokemon[]) => void;
+    setPage: (payload: Page) => void;
+    setSettings: (payload: Settings) => void;
+    changeList: () => void;
+    getLocalStorage: () => void;
+    setDetails: (payload: any) => void;
+  };
+  list: {
+    page: Page;
+    settings: Settings;
+    processedList: SinglePokemon[];
+    status: Status;
+    details?: any;
+  };
+}
