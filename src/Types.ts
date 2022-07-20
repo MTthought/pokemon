@@ -44,7 +44,6 @@ export interface ReduxProps {
     setPage: (payload: Page) => void;
     setSettings: (payload: Settings) => void;
     changeList: () => void;
-    getLocalStorage: () => void;
     setDetails: (payload: any) => void;
   };
   list: {

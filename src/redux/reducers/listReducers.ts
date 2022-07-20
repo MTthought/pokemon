@@ -24,22 +24,6 @@ export default function listReducer(
   action: Action
 ): ListState {
   switch (action.type) {
-    case types.GET_LOCAL_STORAGE:
-      const currentPage: LocalStorage = localStorage.getItem("currentPage");
-      const sortValue: LocalStorage = localStorage.getItem("sortBy");
-      const searchValue: LocalStorage = localStorage.getItem("search");
-
-      return {
-        ...state,
-        page: {
-          ...state.page,
-          current: currentPage ? currentPage : initialState.page.current,
-        },
-        settings: {
-          sortBy: sortValue ? sortValue : initialState.settings.sortBy,
-          search: searchValue ? searchValue : initialState.settings.search,
-        },
-      };
     case types.SET_LISTS:
       return {
         ...state,
