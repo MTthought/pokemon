@@ -19,11 +19,17 @@ function ListPage({ actions, list }: ReduxProps) {
     const currentPage: LocalStorage = localStorage.getItem("currentPage");
     const sortValue: LocalStorage = localStorage.getItem("sortBy");
     const searchValue: LocalStorage = localStorage.getItem("search");
+    const list: LocalStorage = localStorage.getItem("list");
 
-    pager(currentPage ? currentPage : page.current); // default to init state if not in local storage
+    if (list && currentPage) {
+      actions.setLists(JSON.parse(list));
+      actions.setPage(JSON.parse(currentPage));
+    } else {
+      pager(page.current); // fetch data if not in local storage
+    }
 
     if (sortValue || searchValue) {
-      const searchVal: string = searchValue ? searchValue : settings.search;
+      const searchVal: string = searchValue ? searchValue : settings.search; // default to init state if not in local storage
       const sortVal: SortValue = sortValue ? sortValue : settings.sortBy;
       handleChange(searchVal, sortVal);
     }
@@ -34,14 +40,16 @@ function ListPage({ actions, list }: ReduxProps) {
     // reset raw and processed lists
     actions.setLists([]);
     api(url).then((apiData: { page: any; pokemonList: SinglePokemon[] }) => {
-      // update page state
-      actions.setPage({
+      const page = {
         current: url,
         next: apiData.page.next,
         previous: apiData.page.previous,
-      });
+      };
+      // update page state
+      actions.setPage(page);
       // update local storage
-      localStorage.setItem("currentPage", url);
+      localStorage.setItem("currentPage", JSON.stringify(page));
+      localStorage.setItem("list", JSON.stringify(apiData.pokemonList));
       // update raw and processed lists
       actions.setLists(apiData.pokemonList);
     });
