@@ -54,3 +54,8 @@ export interface ReduxProps {
     details?: any;
   };
 }
+
+export interface ApiResult {
+  name: string;
+  url: string;
+}

@@ -1,21 +1,23 @@
 import { Link, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import Header from "../common/Header";
-import { ReduxProps } from "../../Types";
+import { ReduxProps, LocalStorage, SinglePokemon } from "../../Types";
 
 const DetailsPage = ({ actions, list }: ReduxProps) => {
   const { name } = useParams<{ name: string }>();
+  const { details, status } = list;
 
   useEffect(() => {
-    actions.setDetails(
-      list.processedList.filter(
-        (singlePokemon) => singlePokemon.name === name
-      )[0]
-    );
+    const list: LocalStorage = localStorage.getItem("list");
+    if (list) {
+      actions.setDetails(
+        JSON.parse(list).filter(
+          (singlePokemon: SinglePokemon) => singlePokemon.name === name
+        )[0]
+      );
+    }
   }, []);
-
-  const { details, status } = list;
-  console.log(details); // to do: reloading erases data
+  console.log(details);
 
   return details ? (
     <>

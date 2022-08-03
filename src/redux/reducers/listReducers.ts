@@ -1,6 +1,6 @@
 import processData from "../../helpers";
 import * as types from "../actions/actionTypes";
-import { ListState, Action, LocalStorage } from "../../Types";
+import { ListState, Action } from "../../Types";
 import { baseUrl } from "../../constants";
 
 const initialState: ListState = {

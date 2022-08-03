@@ -39,7 +39,7 @@ function ListPage({ actions, list }: ReduxProps) {
   const pager = (url: string) => {
     // reset raw and processed lists
     actions.setLists([]);
-    api(url).then((apiData: { page: any; pokemonList: SinglePokemon[] }) => {
+    api(url).then((apiData: { page: any; pokemonList: any[] }) => {
       const page = {
         current: url,
         next: apiData.page.next,
