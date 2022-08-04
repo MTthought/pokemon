@@ -13,7 +13,7 @@ export type Page = {
   previous: string | null;
 };
 
-export type Status = "No search match" | "Loading...";
+export type Status = "No search match" | "Loading..." | undefined;
 
 export type SortValue = "unsorted" | "name" | "height" | "weight" | string;
 
@@ -30,30 +30,17 @@ export type ListState = {
   rawList: SinglePokemon[];
   processedList: SinglePokemon[];
   status: Status;
+};
+
+export type DetailsState = {
   details?: any;
+  status: Status;
 };
 
 export type Action = {
   type: string;
   payload?: any;
 };
-
-export interface ReduxProps {
-  actions: {
-    setLists: (payload: SinglePokemon[]) => void;
-    setPage: (payload: Page) => void;
-    setSettings: (payload: Settings) => void;
-    changeList: () => void;
-    setDetails: (payload: any) => void;
-  };
-  list: {
-    page: Page;
-    settings: Settings;
-    processedList: SinglePokemon[];
-    status: Status;
-    details?: any;
-  };
-}
 
 export interface ApiResult {
   name: string;

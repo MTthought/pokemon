@@ -16,7 +16,3 @@ export function setSettings(payload: Settings) {
 export function setPage(payload: Page) {
   return { type: types.SET_PAGE, payload };
 }
-
-export function setDetails(payload: any) {
-  return { type: types.SET_DETAILS, payload };
-}

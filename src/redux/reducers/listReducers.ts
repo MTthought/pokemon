@@ -16,7 +16,6 @@ const initialState: ListState = {
   rawList: [],
   processedList: [],
   status: "No search match",
-  details: undefined,
 };
 
 export default function listReducer(
@@ -48,12 +47,6 @@ export default function listReducer(
       return { ...state, settings: action.payload };
     case types.SET_PAGE:
       return { ...state, page: action.payload };
-    case types.SET_DETAILS:
-      return {
-        ...state,
-        details: action.payload,
-        status: action.payload ? initialState.status : "Loading...",
-      };
     default:
       return state;
   }

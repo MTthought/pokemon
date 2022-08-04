@@ -17,8 +17,6 @@ async function getPokemonList(results: ApiResult[]) {
 export async function api(url: string) {
   const pageResponse: any = await axios.get(url);
 
-  console.log("res", pageResponse);
-
   const pokemonList = await getPokemonList(pageResponse.data.results);
 
   return { page: pageResponse.data, pokemonList };

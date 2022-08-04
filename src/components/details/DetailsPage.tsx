@@ -1,11 +1,24 @@
 import { Link, useParams } from "react-router-dom";
+import { connect } from "react-redux";
+import * as detailsActions from "../../redux/actions/detailsActions";
+import { bindActionCreators } from "redux";
 import { useEffect } from "react";
 import Header from "../common/Header";
-import { ReduxProps, LocalStorage, SinglePokemon } from "../../Types";
+import { LocalStorage, SinglePokemon, Status } from "../../Types";
 
-const DetailsPage = ({ actions, list }: ReduxProps) => {
+interface Props {
+  actions: {
+    setDetails: (payload: any) => void;
+  };
+  state: {
+    status: Status;
+    details: any;
+  };
+}
+
+const DetailsPage = ({ actions, state }: Props) => {
   const { name } = useParams<{ name: string }>();
-  const { details, status } = list;
+  const { details, status } = state;
 
   useEffect(() => {
     const list: LocalStorage = localStorage.getItem("list");
@@ -42,4 +55,16 @@ const DetailsPage = ({ actions, list }: ReduxProps) => {
   );
 };
 
-export default DetailsPage;
+function mapStateToProps(state: any) {
+  return {
+    state: state.details,
+  };
+}
+
+function mapDispatchToProps(dispatch: any) {
+  return {
+    actions: bindActionCreators(detailsActions, dispatch),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DetailsPage);
