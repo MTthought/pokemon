@@ -1,13 +1,15 @@
-const sortBy = (key, array) =>
+import { SortValue, SinglePokemon } from "./Types";
+
+const sortBy = (key: SortValue, array: SinglePokemon[]) =>
   [...array].sort((a, b) => {
-    if (a[key] < b[key]) {
+    if (key !== "--" && a[key] < b[key]) {
       return -1;
     } else {
       return 1;
     }
   });
 
-const search = (target, array) =>
+const search = (target: string, array: SinglePokemon[]) =>
   array.filter((element) => {
     if (
       element.name.includes(target.toLowerCase()) ||
@@ -21,7 +23,11 @@ const search = (target, array) =>
     }
   });
 
-const processData = (data, searchVal, sortVal) => {
+const processData = (
+  data: SinglePokemon[],
+  searchVal: string,
+  sortVal: SortValue
+) => {
   const filteredData = search(searchVal, data);
   return sortBy(sortVal, filteredData);
 };

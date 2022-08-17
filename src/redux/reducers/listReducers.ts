@@ -10,7 +10,7 @@ const initialState: ListState = {
     previous: null,
   },
   settings: {
-    sortBy: "unsorted",
+    sortBy: "--",
     search: "",
   },
   rawList: [],

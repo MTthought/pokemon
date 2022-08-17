@@ -1,4 +1,5 @@
-import { Settings, SortValue } from "../../Types";
+import { SortValue, Settings } from "../../Types";
+import { sortOptions } from "../../constants";
 
 interface Props {
   handleChange: (searchVal: string, sortVal: SortValue) => void;
@@ -11,14 +12,16 @@ const Sorting = ({ handleChange, settings }: Props) => (
     <select
       id="nameSorting"
       value={settings.sortBy}
-      onChange={(event: React.ChangeEvent<HTMLSelectElement>) =>
-        handleChange(settings.search, event.target.value)
-      }
+      onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
+        const value: any = event.target.value;
+        handleChange(settings.search, value);
+      }}
     >
-      <option value="unsorted">--</option>
-      <option value="name">Name</option>
-      <option value="height">Height</option>
-      <option value="weight">Weight</option>
+      {sortOptions.map((option, i) => (
+        <option value={option} key={i}>
+          {option}
+        </option>
+      ))}
     </select>
   </div>
 );
