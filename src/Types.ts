@@ -15,7 +15,7 @@ export type Page = {
 
 export type Status = "No search match" | "Loading..." | undefined;
 
-export type SortValue = "unsorted" | "name" | "height" | "weight" | string;
+export type SortValue = "--" | "name" | "height" | "weight";
 
 export type Settings = {
   sortBy: SortValue;

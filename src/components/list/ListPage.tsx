@@ -37,7 +37,7 @@ function ListPage({ actions, state }: Props) {
 
   useEffect(() => {
     const currentPage: LocalStorage = localStorage.getItem("currentPage");
-    const sortValue: LocalStorage = localStorage.getItem("sortBy");
+    const sortValue: any = localStorage.getItem("sortBy"); // any type allows for SortValue type
     const searchValue: LocalStorage = localStorage.getItem("search");
     const list: LocalStorage = localStorage.getItem("list");
 
@@ -82,7 +82,7 @@ function ListPage({ actions, state }: Props) {
       sortBy: sortVal,
     });
     // update local storage
-    localStorage.setItem("sortBy", sortVal);
+    localStorage.setItem("sortBy", JSON.stringify(sortVal));
     localStorage.setItem("search", searchVal);
     // update processed list
     actions.changeList();
