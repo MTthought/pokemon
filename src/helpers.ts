@@ -23,7 +23,7 @@ const search = (target: string, array: SinglePokemon[]) =>
     }
   });
 
-const processData = (
+export const processData = (
   data: SinglePokemon[],
   searchVal: string,
   sortVal: SortValue
@@ -32,4 +32,5 @@ const processData = (
   return sortBy(sortVal, filteredData);
 };
 
-export default processData;
+export const capitaliseFirstLetter = (string: string) =>
+  string.charAt(0).toUpperCase() + string.slice(1);

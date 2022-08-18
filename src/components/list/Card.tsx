@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { capitaliseFirstLetter } from "../../helpers";
 import { SinglePokemon } from "../../Types";
 
 interface Props {
@@ -12,7 +13,7 @@ const Card = ({ singlePokemon }: Props) => (
       alt="img"
     />
     <div className="Card-content">
-      <h2>{singlePokemon.name}</h2>
+      <h2>{capitaliseFirstLetter(singlePokemon.name)}</h2>
       <p>
         <span className="Bold-text">Height:</span> {singlePokemon.height}
       </p>
@@ -21,9 +22,12 @@ const Card = ({ singlePokemon }: Props) => (
       </p>
       <p className="Bold-text">Abilities:</p>
       <ul>
-        {singlePokemon.abilities.map((item, i) => (
-          <li key={i}>{item.ability.name}</li>
-        ))}
+        {singlePokemon.abilities.map(
+          (item, i) =>
+            !item.is_hidden && (
+              <li key={i}>{capitaliseFirstLetter(item.ability.name)}</li>
+            )
+        )}
       </ul>
     </div>
   </Link>

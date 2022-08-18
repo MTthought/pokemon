@@ -1,4 +1,4 @@
-import processData from "../../helpers";
+import { processData } from "../../helpers";
 import * as types from "../actions/actionTypes";
 import { ListState, Action } from "../../Types";
 import { baseUrl } from "../../constants";
