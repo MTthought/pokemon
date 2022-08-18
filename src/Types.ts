@@ -4,7 +4,7 @@ export type SinglePokemon = {
   sprites: { other: { "official-artwork": { front_default: string } } };
   height: number;
   weight: number;
-  abilities: [{ ability: { name: string } }];
+  abilities: [{ ability: { name: string }; is_hidden: boolean }];
 };
 
 export type Page = {
