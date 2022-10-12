@@ -5,6 +5,9 @@ import { bindActionCreators } from "redux";
 import { useEffect } from "react";
 import Header from "../common/Header";
 import { LocalStorage, SinglePokemon, Status } from "../../Types";
+import { capitaliseFirstLetter } from "../../helpers";
+import List from "../common/List";
+import BasicInfo from "../common/BasicInfo";
 
 interface Props {
   actions: {
@@ -29,24 +32,31 @@ const DetailsPage = ({ actions, state }: Props) => {
         )[0]
       );
     }
-  }, []);
-  console.log(details);
+  }, [name, actions]);
 
   return details ? (
     <>
       <Header />
       <div className="Container">
-        <div>
-          <Link to="/">
-            <button>back</button>
-          </Link>
-        </div>
-        <div>
-          <h2>Details {name}</h2>
-          <p>
-            This app uses React, Redux, React Router, and many other helpful
-            libraries.
-          </p>
+        <Link to="/">
+          <button>back</button>
+        </Link>
+        <div className="Details-layout">
+          <img
+            src={details.sprites.other["official-artwork"].front_default}
+            alt="img"
+            className="Card"
+          />
+          <div className="Details-layout">
+            <h1>{capitaliseFirstLetter(name ?? "")}</h1>
+            <div className="Card Card-content">
+              <BasicInfo singlePokemon={details} />
+              <List title="Type" items={details.types} property="type" />
+            </div>
+            <button>
+              <Link to="/">Explore more Pokemon</Link>
+            </button>
+          </div>
         </div>
       </div>
     </>
